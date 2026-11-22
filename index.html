@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>axisnotb</title>
+<meta name="description" content="아끼는 책, 음악, 장소.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;500;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE  everyday, private by default, quietly professional
+   IDEA   a book's contents page: one name, a four-line index, then four short lists
+   PICTURE the wordmark set very large beside the contents index (section names with counts)
+   COLOUR white, ink #1d2127, graphite #69707b, rule #e4e6ea, indigo ink #2f45a8 for links and states only
+   TYPE   Hahmlet (display, titles) + IBM Plex Sans KR (text, UI)
+   LAYOUT 12-col; margin rail holds section name, rows on the right; phone: rail stacks on top */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#15171b);--ink:light-dark(#1d2127,#e8e9ec);--mute:light-dark(#69707b,#9aa0aa);--rule:light-dark(#e4e6ea,#2a2d33);--soft:light-dark(#f5f6f8,#1c1f24);--acc:light-dark(#2f45a8,#93a5ff)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "IBM Plex Sans KR",system-ui,sans-serif;overflow-x:clip;word-break:keep-all;-webkit-font-smoothing:antialiased}
+a{color:var(--acc);text-decoration-thickness:1px;text-underline-offset:4px}
+h1,h2,h3{font-family:"Hahmlet",serif;margin:0;text-wrap:balance}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:max(5vw,16px)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:4px}
+
+header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:4px 28px;min-height:60px}
+.mark{font-family:"Hahmlet",serif;font-weight:700;font-size:19px;color:var(--ink);text-decoration:none;margin-right:auto}
+header.top nav{display:flex;flex-wrap:wrap;gap:0 24px}
+header.top nav a{color:var(--mute);text-decoration:none;font-size:15px;padding:10px 0}
+header.top nav a:hover,header.top nav a.cur{color:var(--ink)}
+
+.hero{padding-block:clamp(72px,12vw,168px)}
+.feature{margin:0;max-width:980px}
+.feature blockquote{margin:0}
+.feature .q{font-family:"Hahmlet",serif;font-weight:300;font-size:clamp(32px,4.8vw,60px);line-height:1.32;letter-spacing:-.03em;margin:0;text-wrap:balance}
+.feature figcaption{margin-top:28px;color:light-dark(#4a4f57,#b8bcc4);font-size:15px;text-align:center}
+.feature figcaption b{font-weight:400}
+.feature .ph{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px;background:var(--soft)}
+.feature .lyric .q{white-space:pre-line}
+
+section.part{padding-block:clamp(56px,7vw,96px);border-top:1px solid var(--rule)}
+.part .wrap{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:24px 64px}
+.rail{align-self:start;position:sticky;top:92px}
+.rail h2{font-weight:500;font-size:clamp(30px,3.2vw,40px);line-height:1.1;letter-spacing:-.02em}
+.rail p{color:var(--mute);font-size:15px;margin:12px 0 0;max-width:16em}
+
+.list{border-top:1px solid var(--ink);margin:0;padding:0;list-style:none}
+.list li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2px 32px;padding:18px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.list h3{font-weight:500;font-size:20px;line-height:1.4;letter-spacing:-.01em}
+.list .by{color:var(--mute);font-size:15px}
+.list .line{grid-column:1 / -1;margin:0;font-size:15.5px;color:var(--ink);max-width:40em}
+.list.wide li{grid-template-columns:minmax(0,4fr) minmax(0,6fr) auto}
+.list.wide .line{grid-column:auto}
+.st{font-size:14px;white-space:nowrap;color:var(--mute)}
+.st.live{color:var(--acc)}
+.st.live::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:currentColor;margin-right:7px;vertical-align:1px}
+
+.mail{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.mail .addr{color:var(--ink);text-decoration:none;font-size:15px;overflow-wrap:anywhere}
+.mail .addr:hover{color:var(--acc)}
+.more{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font:500 15px "IBM Plex Sans KR",sans-serif;min-height:44px;padding:0 18px;border-radius:22px;border:0;background:var(--soft);color:var(--ink);cursor:pointer}
+.more:hover{background:color-mix(in srgb,var(--soft) 80%,var(--ink) 8%)}
+.more::after{content:"";width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.more[aria-expanded=true]::after{transform:translateY(2px) rotate(-135deg)}
+.more[hidden]{display:none}
+.cue{display:none}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.sample{color:var(--mute);font-size:13px;margin-top:20px}
+footer{border-top:1px solid var(--rule);padding-block:28px;color:var(--mute);font-size:14px}
+.foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:12px 24px}
+
+@media(max-width:860px){.hero .wrap,.part .wrap{grid-template-columns:minmax(0,1fr)}.rail{position:static}.list.wide li{grid-template-columns:minmax(0,1fr) auto}.list.wide .line{grid-column:1 / -1}.list.wide .st{grid-row:1;grid-column:2}}
+@media(max-width:560px){header.top nav{gap:0 16px}.list li{grid-template-columns:minmax(0,1fr)}.list h3{font-size:18px}}
+@media(max-width:600px){
+html{scroll-snap-type:y proximity;scroll-padding-top:0}
+header.top{display:none}
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;position:relative;padding-block:72px 120px;scroll-snap-align:start}
+.hero .wrap{width:100%}
+.feature .q{font-size:clamp(28px,8.4vw,38px)}
+.cue{display:flex;flex-direction:column;align-items:center;gap:10px;position:absolute;left:50%;bottom:max(28px,env(safe-area-inset-bottom));transform:translateX(-50%);color:var(--mute);font-size:13px;text-decoration:none;padding:8px 16px}
+.cue i{display:block;width:1.5px;height:40px;background:var(--ink);animation:drop 2s ease-in-out infinite}
+section.part{border:0;min-height:100svh;display:flex;align-items:center;padding:16px 12px;scroll-snap-align:start}
+section.part>.wrap{width:100%;background:var(--soft);border:1px solid transparent;border-radius:18px;padding:30px 20px 26px;opacity:.38;transform:scale(.95);transition:opacity .45s ease,transform .45s ease,border-color .45s ease,background-color .45s ease}
+section.part.active>.wrap{opacity:1;transform:none;background:var(--bg);border-color:var(--ink)}
+.rail h2{font-size:32px}
+.list{border-top-color:var(--rule)}
+footer{scroll-snap-align:end}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.cue i{animation:none}section.part>.wrap{transition:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="mark" href="#top">axisnotb</a>
+  <nav aria-label="주 메뉴">
+    <a href="#books">책</a><a href="#music">음악</a><a href="#places">장소</a>
+  </nav>
+</div></header>
+
+<main id="top">
+<section class="hero"><div class="wrap">
+  <div id="feature" class="feature"></div>
+</div>
+  <a class="cue" href="#books"><span>아래로</span><i aria-hidden="true"></i></a>
+</section>
+
+<section class="part" id="books"><div class="wrap">
+  <div class="rail"><h2>책</h2><p>읽으면 좀 나아질까</p></div>
+  <div><ul class="list" id="bookList"></ul><button type="button" class="more" data-k="books" aria-expanded="false">더보기</button>
+  <p class="sample">책, 음악, 장소 목록은 예시입니다.</p></div>
+</div></section>
+
+<section class="part" id="music"><div class="wrap">
+  <div class="rail"><h2>음악</h2><p>기분을 바꾸는 마법</p></div>
+  <div><ul class="list" id="musicList"></ul><button type="button" class="more" data-k="music" aria-expanded="false">더보기</button></div>
+</div></section>
+
+<section class="part" id="places"><div class="wrap">
+  <div class="rail"><h2>장소</h2><p>되돌릴 수 없는 시간</p></div>
+  <div><ul class="list" id="placeList"></ul><button type="button" class="more" data-k="places" aria-expanded="false">더보기</button></div>
+</div></section>
+
+
+</main>
+
+<footer><div class="wrap foot">
+  <span class="mail"><a class="addr" id="addr" href="#top">cjhaha (at) gmail.com</a></span>
+</div></footer>
+
+<script>
+{
+const data={
+ books:[
+  {t:"코스모스",b:"칼 세이건",l:"생각이 좁아지는 밤, 별빛만큼 멀리 물러서게 하는 책."},
+  {t:"데미안",b:"헤르만 헤세",l:"펼 때마다 다른 문장이 나를 먼저 알아본다."},
+  {t:"죽음의 수용소에서",b:"빅터 프랭클",l:"가장 어두운 곳에서 건져 올린, 선택이라는 작은 빛."},
+  {t:"아주 작은 습관의 힘",b:"제임스 클리어",l:"거창한 결심 대신 오늘의 한 걸음을 믿게 한다."},
+  {t:"총, 균, 쇠",b:"재레드 다이아몬드",l:"두꺼운 책장 사이로 대륙의 시간이 천천히 흐른다."},
+  {t:"작별하지 않는다",b:"한강",l:"눈송이처럼 조용히 쌓여, 끝내 녹지 않는 기억."}
+ ],
+ music:[
+  {t:"Kind of Blue",b:"Miles Davis",l:"첫 음이 흐르면 방 안의 공기가 반 톤 낮아진다."},
+  {t:"Goldberg Variations (1981)",b:"Glenn Gould",l:"피아노 너머 허밍까지 들리는, 가장 고요한 집중."},
+  {t:"Abbey Road",b:"The Beatles",l:"B면은 끊지 않고 끝까지 간다."},
+  {t:"Blue",b:"Joni Mitchell",l:"불을 끄고 들으면 더 선명해지는 목소리."},
+  {t:"정규 1집",b:"검정치마",l:"걷는 속도에 맞춰 도시가 조금 낭만적으로 바뀐다."}
+ ],
+ places:[
+  {t:"국립중앙박물관",b:"서울",l:"사유의 방, 두 반가사유상 앞에서 시간이 느려진다."},
+  {t:"선유도공원",b:"서울",l:"물을 거르던 자리에 이제는 바람과 초록이 고인다."},
+  {t:"뮤지엄 산",b:"원주",l:"돌과 물과 빛이 천천히 말을 거는 산속의 미술관."},
+  {t:"우도",b:"제주",l:"페달을 밟을 때마다 바다 색이 한 겹씩 바뀐다."}
+ ]
+};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const row=x=>`<li><h3>${esc(x.t)}</h3><span class="by">${esc(x.b)}</span>${x.l?`<p class="line">${esc(x.l)}</p>`:""}</li>`;
+const LIMIT=3;
+const lists={books:["bookList",row],music:["musicList",row],places:["placeList",row]};
+const open={};
+function render(k){const [id,fn]=lists[k],items=data[k];$(id).innerHTML=(open[k]?items:items.slice(0,LIMIT)).map(fn).join("");
+ const b=document.querySelector(`.more[data-k="${k}"]`);b.hidden=items.length<=LIMIT;b.setAttribute("aria-expanded",open[k]?"true":"false");b.textContent=open[k]?"접기":"더보기"}
+Object.keys(lists).forEach(render);
+document.querySelectorAll(".more").forEach(b=>b.addEventListener("click",()=>{const k=b.dataset.k;open[k]=!open[k];render(k);if(!open[k])$(k).scrollIntoView({block:"start"})}));
+// 첫 화면 문장: 1929년 이전 작품(저작권 만료)에서 골랐고, 외국 작품은 직접 옮긴 번역
+const features=[
+ {type:"quote",text:"신중하게 살고 싶어 숲으로 갔다.",title:"월든",by:"헨리 데이비드 소로"},
+ {type:"lyric",text:"아리랑 아리랑 아라리요",title:"아리랑",by:"민요"},
+ {type:"quote",text:"새는 알을 깨고 나오려 투쟁한다.",title:"데미안",by:"헤르만 헤세"},
+ {type:"lyric",text:"나의 살던 고향은 꽃피는 산골",title:"고향의 봄",by:"이원수 작사"},
+ {type:"quote",text:"인간은 생각하는 갈대다.",title:"팡세",by:"블레즈 파스칼"},
+ {type:"lyric",text:"오랜 친구를 어찌 잊으리",title:"Auld Lang Syne",by:"로버트 번스"},
+ {type:"quote",text:"사느냐 죽느냐, 그것이 문제로다.",title:"햄릿",by:"윌리엄 셰익스피어"},
+ {type:"lyric",text:"푸른 하늘 은하수 하얀 쪽배엔",title:"반달",by:"윤극영"},
+ {type:"quote",text:"괴로움은 일이 아니라 판단에서 온다.",title:"명상록",by:"마르쿠스 아우렐리우스"},
+ {type:"lyric",text:"환희여, 신들의 아름다운 불꽃이여",title:"환희의 송가",by:"프리드리히 실러"},
+ {type:"quote",text:"천 리 길도 한 걸음에서 시작된다.",title:"도덕경",by:"노자"},
+ {type:"lyric",text:"성문 앞 우물가에 서 있는 보리수",title:"보리수",by:"빌헬름 뮐러 작사, 슈베르트"},
+ {type:"quote",text:"행복한 가정은 모두 비슷하다.",title:"안나 카레니나",by:"레프 톨스토이"},
+ {type:"lyric",text:"울 밑에선 봉선화야",title:"봉선화",by:"김형준 작사, 홍난파"},
+ {type:"quote",text:"인간은 노력하는 한 방황한다.",title:"파우스트",by:"요한 볼프강 폰 괴테"},
+ {type:"lyric",text:"아무리 초라해도 집만 한 곳 없네",title:"Home, Sweet Home",by:"존 하워드 페인"},
+ {type:"quote",text:"빼앗긴 들에도 봄은 오는가",title:"빼앗긴 들에도 봄은 오는가",by:"이상화"},
+ {type:"lyric",text:"뜸북뜸북 뜸북새 논에서 울고",title:"오빠 생각",by:"최순애 작사"},
+ {type:"quote",text:"가장 좋은 시절이자 가장 나쁜 시절",title:"두 도시 이야기",by:"찰스 디킨스"},
+ {type:"lyric",text:"오 대니 보이, 피리 소리가 부르네",title:"Danny Boy",by:"프레더릭 웨덜리"},
+ {type:"quote",text:"아아 사랑하는 나의 님은 갔습니다",title:"님의 침묵",by:"한용운"},
+ {type:"lyric",text:"옛날에 금잔디 동산에",title:"메기의 추억",by:"조지 존슨 작사"},
+ {type:"quote",text:"네 운명을 사랑하라.",title:"즐거운 학문",by:"프리드리히 니체"},
+ {type:"lyric",text:"놀라운 은총, 그 얼마나 달콤한가",title:"Amazing Grace",by:"존 뉴턴"},
+ {type:"quote",text:"배우고 때때로 익히면 기쁘지 아니한가",title:"논어",by:"공자"},
+ {type:"quote",text:"나 보기가 역겨워 가실 때에는",title:"진달래꽃",by:"김소월"},
+ {type:"quote",text:"물결을 거스르는 배처럼 나아간다.",title:"위대한 개츠비",by:"F. 스콧 피츠제럴드"},
+ {type:"quote",text:"주여, 때가 되었습니다.",title:"가을날",by:"라이너 마리아 릴케"},
+ {type:"quote",text:"사람들은 조용한 절망 속에 산다.",title:"월든",by:"헨리 데이비드 소로"},
+ {type:"quote",text:"모든 것에는 때가 있다.",title:"전도서",by:"구약성경"},
+ {type:"quote",text:"누군가는 시궁창에서도 별을 본다.",title:"윈더미어 부인의 부채",by:"오스카 와일드"}
+];
+// 날짜(방문자 기기 기준)마다 하나씩 차례로 바뀜
+const now=new Date(),day=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/864e5);
+const f=features[day%features.length];
+$("feature").innerHTML=f.type==="photo"
+ ?`<figure class="feature"><img class="ph" src="${esc(f.src)}" alt="${esc(f.title)}"><figcaption>-${esc(f.title)}, ${esc(f.by)}-</figcaption></figure>`
+ :`<figure class="feature ${f.type}"><blockquote><p class="q">${esc(f.text)}</p></blockquote><figcaption>-${esc(f.title)}, ${esc(f.by)}-</figcaption></figure>`;
+
+// 주소를 조각으로 나눠 두었다가 화면에서만 합쳐, 수집 프로그램이 원문에서 읽기 어렵게 함
+const parts=["cjhaha","gmail","com"],email=parts[0]+"@"+parts[1]+"."+parts[2];
+const a=$("addr");a.textContent=email;a.href="mailto:"+email;
+
+const links=[...document.querySelectorAll("header.top nav a")];
+const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting)links.forEach(l=>l.classList.toggle("cur",l.getAttribute("href")==="#"+en.target.id))})},{rootMargin:"-40% 0px -55% 0px"});
+document.querySelectorAll("section.part").forEach(s=>io.observe(s));
+// 모바일: 화면 가운데에 들어온 카드를 강조
+const hi=new IntersectionObserver(es=>{es.forEach(en=>en.target.classList.toggle("active",en.isIntersecting))},{rootMargin:"-35% 0px -35% 0px"});
+document.querySelectorAll("section.part").forEach(s=>hi.observe(s));
+}
+</script>
+</body>
+</html>
