@@ -130,31 +130,10 @@ footer{scroll-snap-align:end}
   <span class="mail"><a class="addr" id="addr" href="#top">cjhaha (at) gmail.com</a></span>
 </div></footer>
 
+<script src="content.js"></script>
 <script>
 {
-const data={
- books:[
-  {t:"코스모스",b:"칼 세이건",l:"생각이 좁아지는 밤, 별빛만큼 멀리 물러서게 하는 책."},
-  {t:"데미안",b:"헤르만 헤세",l:"펼 때마다 다른 문장이 나를 먼저 알아본다."},
-  {t:"죽음의 수용소에서",b:"빅터 프랭클",l:"가장 어두운 곳에서 건져 올린, 선택이라는 작은 빛."},
-  {t:"아주 작은 습관의 힘",b:"제임스 클리어",l:"거창한 결심 대신 오늘의 한 걸음을 믿게 한다."},
-  {t:"총, 균, 쇠",b:"재레드 다이아몬드",l:"두꺼운 책장 사이로 대륙의 시간이 천천히 흐른다."},
-  {t:"작별하지 않는다",b:"한강",l:"눈송이처럼 조용히 쌓여, 끝내 녹지 않는 기억."}
- ],
- music:[
-  {t:"Kind of Blue",b:"Miles Davis",l:"첫 음이 흐르면 방 안의 공기가 반 톤 낮아진다."},
-  {t:"Goldberg Variations (1981)",b:"Glenn Gould",l:"피아노 너머 허밍까지 들리는, 가장 고요한 집중."},
-  {t:"Abbey Road",b:"The Beatles",l:"B면은 끊지 않고 끝까지 간다."},
-  {t:"Blue",b:"Joni Mitchell",l:"불을 끄고 들으면 더 선명해지는 목소리."},
-  {t:"정규 1집",b:"검정치마",l:"걷는 속도에 맞춰 도시가 조금 낭만적으로 바뀐다."}
- ],
- places:[
-  {t:"국립중앙박물관",b:"서울",l:"사유의 방, 두 반가사유상 앞에서 시간이 느려진다."},
-  {t:"선유도공원",b:"서울",l:"물을 거르던 자리에 이제는 바람과 초록이 고인다."},
-  {t:"뮤지엄 산",b:"원주",l:"돌과 물과 빛이 천천히 말을 거는 산속의 미술관."},
-  {t:"우도",b:"제주",l:"페달을 밟을 때마다 바다 색이 한 겹씩 바뀐다."}
- ]
-};
+const data={books:BOOKS,music:MUSIC,places:PLACES};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const row=x=>`<li><h3>${esc(x.t)}</h3><span class="by">${esc(x.b)}</span>${x.l?`<p class="line">${esc(x.l)}</p>`:""}</li>`;
@@ -165,40 +144,7 @@ function render(k){const [id,fn]=lists[k],items=data[k];$(id).innerHTML=(open[k]
  const b=document.querySelector(`.more[data-k="${k}"]`);b.hidden=items.length<=LIMIT;b.setAttribute("aria-expanded",open[k]?"true":"false");b.textContent=open[k]?"접기":"더보기"}
 Object.keys(lists).forEach(render);
 document.querySelectorAll(".more").forEach(b=>b.addEventListener("click",()=>{const k=b.dataset.k;open[k]=!open[k];render(k);if(!open[k])$(k).scrollIntoView({block:"start"})}));
-// 첫 화면 문장: 1929년 이전 작품(저작권 만료)에서 골랐고, 외국 작품은 직접 옮긴 번역
-const features=[
- {type:"quote",text:"신중하게 살고 싶어 숲으로 갔다.",title:"월든",by:"헨리 데이비드 소로"},
- {type:"lyric",text:"아리랑 아리랑 아라리요",title:"아리랑",by:"민요"},
- {type:"quote",text:"새는 알을 깨고 나오려 투쟁한다.",title:"데미안",by:"헤르만 헤세"},
- {type:"lyric",text:"나의 살던 고향은 꽃피는 산골",title:"고향의 봄",by:"이원수 작사"},
- {type:"quote",text:"인간은 생각하는 갈대다.",title:"팡세",by:"블레즈 파스칼"},
- {type:"lyric",text:"오랜 친구를 어찌 잊으리",title:"Auld Lang Syne",by:"로버트 번스"},
- {type:"quote",text:"사느냐 죽느냐, 그것이 문제로다.",title:"햄릿",by:"윌리엄 셰익스피어"},
- {type:"lyric",text:"푸른 하늘 은하수 하얀 쪽배엔",title:"반달",by:"윤극영"},
- {type:"quote",text:"괴로움은 일이 아니라 판단에서 온다.",title:"명상록",by:"마르쿠스 아우렐리우스"},
- {type:"lyric",text:"환희여, 신들의 아름다운 불꽃이여",title:"환희의 송가",by:"프리드리히 실러"},
- {type:"quote",text:"천 리 길도 한 걸음에서 시작된다.",title:"도덕경",by:"노자"},
- {type:"lyric",text:"성문 앞 우물가에 서 있는 보리수",title:"보리수",by:"빌헬름 뮐러 작사, 슈베르트"},
- {type:"quote",text:"행복한 가정은 모두 비슷하다.",title:"안나 카레니나",by:"레프 톨스토이"},
- {type:"lyric",text:"울 밑에선 봉선화야",title:"봉선화",by:"김형준 작사, 홍난파"},
- {type:"quote",text:"인간은 노력하는 한 방황한다.",title:"파우스트",by:"요한 볼프강 폰 괴테"},
- {type:"lyric",text:"아무리 초라해도 집만 한 곳 없네",title:"Home, Sweet Home",by:"존 하워드 페인"},
- {type:"quote",text:"빼앗긴 들에도 봄은 오는가",title:"빼앗긴 들에도 봄은 오는가",by:"이상화"},
- {type:"lyric",text:"뜸북뜸북 뜸북새 논에서 울고",title:"오빠 생각",by:"최순애 작사"},
- {type:"quote",text:"가장 좋은 시절이자 가장 나쁜 시절",title:"두 도시 이야기",by:"찰스 디킨스"},
- {type:"lyric",text:"오 대니 보이, 피리 소리가 부르네",title:"Danny Boy",by:"프레더릭 웨덜리"},
- {type:"quote",text:"아아 사랑하는 나의 님은 갔습니다",title:"님의 침묵",by:"한용운"},
- {type:"lyric",text:"옛날에 금잔디 동산에",title:"메기의 추억",by:"조지 존슨 작사"},
- {type:"quote",text:"네 운명을 사랑하라.",title:"즐거운 학문",by:"프리드리히 니체"},
- {type:"lyric",text:"놀라운 은총, 그 얼마나 달콤한가",title:"Amazing Grace",by:"존 뉴턴"},
- {type:"quote",text:"배우고 때때로 익히면 기쁘지 아니한가",title:"논어",by:"공자"},
- {type:"quote",text:"나 보기가 역겨워 가실 때에는",title:"진달래꽃",by:"김소월"},
- {type:"quote",text:"물결을 거스르는 배처럼 나아간다.",title:"위대한 개츠비",by:"F. 스콧 피츠제럴드"},
- {type:"quote",text:"주여, 때가 되었습니다.",title:"가을날",by:"라이너 마리아 릴케"},
- {type:"quote",text:"사람들은 조용한 절망 속에 산다.",title:"월든",by:"헨리 데이비드 소로"},
- {type:"quote",text:"모든 것에는 때가 있다.",title:"전도서",by:"구약성경"},
- {type:"quote",text:"누군가는 시궁창에서도 별을 본다.",title:"윈더미어 부인의 부채",by:"오스카 와일드"}
-];
+const features=QUOTES;
 // 날짜(방문자 기기 기준)마다 하나씩 차례로 바뀜
 const now=new Date(),day=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/864e5);
 const f=features[day%features.length];
